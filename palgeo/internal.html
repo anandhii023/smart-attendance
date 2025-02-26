@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semester and Subject Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Semester and Subject Selection</h1>
+
+    <!-- Semester Dropdown -->
+    <label for="semester">Select Semester:</label>
+    <select id="semester" onchange="updateSubjects()">
+        <option value="">-- Select Semester --</option>
+        <option value="1">First Semester</option>
+        <option value="2">Second Semester</option>
+        <option value="3">Third Semester</option>
+        <option value="4">Fourth Semester</option>
+        <option value="5">Fifth Semester</option>
+        <option value="6">Sixth Semester</option>
+        <option value="7">Seventh Semester</option>
+        <option value="8">Eighth Semester</option>
+    </select>
+
+    <!-- Subject Dropdown -->
+    <label for="subject">Select Subject:</label>
+    <select id="subject">
+        <option value="">-- Select Subject --</option>
+    </select>
+
+    <button onclick="submitChoice()">Submit</button>
+
+    <script>
+        // Subjects for each semester
+        const subjects = {
+            1: ["Physics", "Chemistry", "Engineering Maths 1", "Engineering Graphics", "English", "Tamil"],
+            2: ["C Programming", "Physics for Information Science", "Technical English", "Tamils and Heritage", "Environmental Science and Engineering", "Engineering Maths 2"],
+            3: ["Java Programming", "Data Structure", "Digital Principle", "Data Exploratory", "Agile Software", "Professional English"] // Added "Development Techniques"
+            // Add more for other semesters as needed
+        };
+
+        // Update the subject dropdown based on semester selection
+        function updateSubjects() {
+            const semesterSelect = document.getElementById("semester").value;
+            const subjectSelect = document.getElementById("subject");
+            
+            // Clear previous options
+            subjectSelect.innerHTML = '<option value="">-- Select Subject --</option>';
+
+            // Get the subjects for the selected semester
+            if (semesterSelect && subjects[semesterSelect]) {
+                subjects[semesterSelect].forEach(subject => {
+                    const option = document.createElement("option");
+                    option.value = subject;
+                    option.text = subject;
+                    subjectSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Function to handle form submission
+        function submitChoice() {
+            const semester = document.getElementById("semester").value;
+            const subject = document.getElementById("subject").value;
+
+            if (semester && subject) {
+                // Navigate based on selected subject
+                if (subject === "Data Structure") {
+                    window.location.href = "pie3data.html"; // Navigate to the Data Structure pie chart
+                } else if (subject === "Chemistry") {
+                    window.location.href = "pie1c.html"; // Navigate to the Chemistry pie chart
+                } else if (subject === "Physics") {
+                    window.location.href = "pie1p.html"; // Navigate to the Physics pie chart
+                } else if (subject === "Physics for Information Science") {
+                    window.location.href = "pie2ph.html"; // Navigate to the Physics for Information Science pie chart
+                } else if (subject === "Engineering Graphics") {
+                    window.location.href = "pie1eg.html"; // Navigate to the Engineering Graphics pie chart
+                } else if (subject === "Engineering Maths 1") {
+                    window.location.href = "pie1m.html"; // Navigate to the Engineering Maths 1 pie chart
+                } else if (subject === "Engineering Maths 2") {
+                    window.location.href = "pie2m.html"; // Navigate to the Engineering Maths 2 pie chart
+                } else if (subject === "English") {
+                    window.location.href = "pie1e.html"; // Navigate to the English pie chart
+                } else if (subject === "Tamil") {
+                    window.location.href = "piet.html"; // Navigate to the Tamil pie chart
+                } else if (subject === "C Programming") {
+                    window.location.href = "pie2cp.html"; // Navigate to the C Programming pie chart
+                } else if (subject === "Technical English") {
+                    window.location.href = "pie2te.html"; // Navigate to the Technical English pie chart
+                } else if (subject === "Environmental Science and Engineering") {
+                    window.location.href = "pie2evs.html"; // Navigate to the Environmental Science and Engineering pie chart
+                } else if (subject === "Tamils and Heritage") {
+                    window.location.href = "pie2t.html"; // Navigate to the Tamils and Heritage pie chart
+                } else if (subject === "Java Programming") {
+                    window.location.href = "pie3j.html"; // Navigate to the Java Programming pie chart
+                } else if (subject === "Digital Principle") {
+                    window.location.href = "pie3ds.html"; // Navigate to the Digital Principle pie chart
+                } else if (subject === "Agile Software") {
+                    window.location.href = "pie3ag.html"; // Navigate to the Agile Software pie chart
+                } else if (subject === "Professional English") {
+                    window.location.href = "pie3pe.html"; // Navigate to the Professional English pie chart
+                } else if (subject === "Data Exploratory") {
+                    window.location.href = "pie3dev.html"; // Navigate to the Development Techniques pie chart
+                } else {
+                    alert('You selected: Semester ${semester}, Subject: ${subject}');
+                }
+            } else {
+                alert("Please select both a semester and a subject.");
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="internal.css">
+</body>
+</html>

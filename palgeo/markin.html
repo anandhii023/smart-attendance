@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance - St. Joseph's College</title>
+    <style>  
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #3161c9; /* Background color */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            min-height: 100vh; /* Ensure full-page height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 20px;
+            margin: 20px 0;
+            color: #555;
+        }
+
+        .period-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .period {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .period button {
+            width: 120px; /* Enlarge button size */
+            height: 120px;
+            font-size: 20px;
+            border: none;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .period button:hover {
+            background-color: #2980b9;
+            transform: scale(1.1);
+        }
+
+        .mark-in-button {
+            margin-top: 15px;
+            padding: 12px 25px;
+            font-size: 18px;
+            border: 2px solid #28a745;
+            border-radius: 5px;
+            background-color: transparent;
+            color: #28a745;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+
+        .mark-in-button:hover {
+            background-color: #28a745;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 50px;
+        }
+
+        .icons a {
+            display: inline-block;
+            text-decoration: none;
+            color: #3498db;
+            font-size: 22px;
+            margin: 10px;
+            transition: color 0.3s;
+        }
+
+        .icons a:hover {
+            color: #2980b9;
+        }
+
+        .icons i {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .period button {
+                width: 90px;
+                height: 90px;
+                font-size: 18px;
+            }
+
+            .icons a {
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+
+            .container {
+                padding: 30px;
+            }
+
+            .period button {
+                width: 70px;
+                height: 70px;
+                font-size: 14px;
+            }
+
+            .icons a {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Mark Attendance - St. Joseph's College</h1>
+        <p>Today's Date: <span id="date"></span></p>
+        <div class="period-buttons">
+            <!-- Period buttons without "Mark In" initially -->
+            <div class="period" id="period1">
+                <button>Period 1</button>
+            </div>
+            <div class="period" id="period2">
+                <button>Period 2</button>
+            </div>
+            <div class="period" id="period3">
+                <button>Period 3</button>
+            </div>
+            <div class="period" id="period4">
+                <button>Period 4</button>
+            </div>
+            <div class="period" id="period5">
+                <button>Period 5</button>
+            </div>
+            <div class="period" id="period6">
+                <button>Period 6</button>
+            </div>
+            <div class="period" id="period7">
+                <button>Period 7</button>
+            </div>
+            <div class="period" id="period8">
+                <button>Period 8</button>
+            </div>
+            <div class="period" id="period9">
+                <button>Period 9</button>
+            </div>
+            <div class="period" id="period10">
+                <button>Period 10</button>
+            </div>
+        </div>
+
+        <div class="icons">
+            <!-- Icons for additional functionalities -->
+            <a href="timetable.html"><i class="fas fa-calendar-alt"></i><br>Timetable</a>
+            <a href="leaveapproval.html"><i class="fas fa-user-times"></i><br>Leave Approval</a> <!-- Updated -->
+            <a href="internal.html"><i class="fas fa-check-circle"></i><br>Internal Checker</a>
+            <a href="rewards.html"><i class="fas fa-trophy"></i><br>Rewards</a>
+        </div>
+    </div>
+
+    <script>
+        // Display today's date
+        const dateElement = document.getElementById('date');
+        const today = new Date().toLocaleDateString();
+        dateElement.textContent = today;
+
+        // JavaScript function to display the "Mark In" button
+        const periods = document.querySelectorAll('.period');
+
+        periods.forEach(period => {
+            period.addEventListener('click', function() {
+                // Remove existing Mark In buttons from other periods
+                document.querySelectorAll('.mark-in-button').forEach(button => button.remove());
+
+                // Create a new "Mark In" button
+                const markInButton = document.createElement('button');
+                markInButton.className = 'mark-in-button';
+                markInButton.textContent = 'Mark In';
+
+                // Append the "Mark In" button to the clicked period
+                period.appendChild(markInButton);
+
+                // Add an event listener to navigate to camera1.html when clicked
+                markInButton.addEventListener('click', function(event) {
+                    event.stopPropagation(); // Prevent event bubbling to parent period
+                    window.location.href = 'camera1.html'; // Redirect to camera1.html
+                });
+            });
+        });
+    </script>
+</body>
+</html>

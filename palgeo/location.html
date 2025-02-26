@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Permission</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and HTML styling */
+        body, html {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #001f3f; /* Dark blue background */
+            color: #333;
+        }
+
+        /* Container styling */
+        .container {
+            text-align: center;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        /* Headings styling */
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #fc0808;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #ff0000;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            color: #6b6b6b;
+        }
+
+        /* Button styling */
+        button {
+            padding: 12px 24px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Specific styles for Allow and Deny buttons */
+        button:first-of-type {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        button:first-of-type:hover {
+            background-color: #45a047;
+            box-shadow: 0 6px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        button:last-of-type {
+            background-color: #f44336;
+            color: white;
+        }
+
+        button:last-of-type:hover {
+            background-color: #e53935;
+            box-shadow: 0 6px 12px rgba(244, 67, 54, 0.2);
+        }
+
+        /* Responsiveness */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+    <script>
+        function requestGPS() {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(success, error);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function success(position) {
+            alert("GPS Access Allowed.\nLatitude: " + position.coords.latitude + "\nLongitude: " + position.coords.longitude);
+            // Navigate to admin.html after getting the GPS coordinates
+            window.location.href = 'admin.html';  // Replaced with your admin page
+        }
+
+        function error() {
+            alert("GPS Access Denied.");
+        }
+    </script>
+</head>
+<body>
+
+    <div class="container">
+        <h1>REGEO</h1>
+        <h2>Allow GPS Access</h2>
+        <p>Do you want to allow GPS access?</p>
+        <button onclick="requestGPS()">Allow</button>
+        <button onclick="alert('GPS Access Denied');">Deny</button>
+    </div>
+
+</body>
+</html>

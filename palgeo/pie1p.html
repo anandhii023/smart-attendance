@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Pie Chart</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #99c8f6;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1, h3 {
+            color: #333;
+        }
+
+        .chart-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        canvas {
+            margin: 20px auto;
+        }
+
+        .info {
+            margin-top: 30px;
+        }
+
+        .info div {
+            font-size: 1.1rem;
+            margin: 5px 0;
+        }
+    </style>
+    <!-- Load Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h1>Attendance Report</h1>
+    <h3>Subject: Physics</h3>
+    <h3>Staff Name: Keerthana M.</h3>
+
+    <div class="chart-container">
+        <canvas id="attendanceChart"></canvas>
+    </div>
+
+    <div class="info">
+        <div>Total Hours: <strong>72</strong></div>
+        <div>Absent Hours: <strong>58</strong></div>
+        <div>Present Hours: <strong>14</strong></div>
+    </div>
+
+    <script>
+        // Attendance Data
+        const totalHours = 72;
+        const absentHours = 58;
+        const presentHours = totalHours - absentHours;
+
+        // Create Pie Chart
+        const ctx = document.getElementById('attendanceChart').getContext('2d');
+        const attendanceChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Present Hours', 'Absent Hours'],
+                datasets: [{
+                    data: [presentHours, absentHours],
+                    backgroundColor: ['#4CAF50', '#FF6347'], // Green for present, red for absent
+                    borderColor: ['#fff', '#fff'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const value = tooltipItem.raw;
+                                const percentage = ((value / totalHours) * 100).toFixed(2);
+                                return `${tooltipItem.label}: ${value} hours (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

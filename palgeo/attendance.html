@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance - St. Joseph's College</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .period-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .period-buttons button {
+            width: 70px;
+            height: 70px;
+            font-size: 16px;
+            border: none;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .period-buttons button:hover {
+            background-color: #2980b9;
+        }
+
+        .icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .icons a {
+            display: inline-block;
+            text-decoration: none;
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        .icons a:hover {
+            color: #2980b9;
+        }
+
+        .icons i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Mark Attendance - St. Joseph's College</h1>
+        <p>Today's Date: <span id="date"></span></p>
+        <div class="period-buttons">
+            <!-- Buttons for 10 periods -->
+            <button>Period 1</button>
+            <button>Period 2</button>
+            <button>Period 3</button>
+            <button>Period 4</button>
+            <button>Period 5</button>
+            <button>Period 6</button>
+            <button>Period 7</button>
+            <button>Period 8</button>
+            <button>Period 9</button>
+            <button>Period 10</button>
+        </div>
+
+        <div class="icons">
+            <!-- Icons for additional functionalities -->
+            <a href="#"><i class="fas fa-calendar-alt"></i><br>Timetable</a>
+            <a href="#"><i class="fas fa-user-times"></i><br>Leave Approval</a>
+            <a href="#"><i class="fas fa-check-circle"></i><br>Internal Checker</a>
+            <a href="#"><i class="fas fa-trophy"></i><br>Rewards</a>
+        </div>
+    </div>
+
+    <script>
+        // Display today's date
+        const dateElement = document.getElementById('date');
+        const today = new Date().toLocaleDateString();
+        dateElement.textContent = today;
+    </script>
+    <link rel="stylesheet" href="attendance.css">
+    <script src="attendance.js"></script>
+
+</body>
+</html>

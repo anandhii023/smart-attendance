@@ -1,0 +1,98 @@
+<style>
+    * {
+        margin: 1000;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    
+    .parallax {
+            background-image: ("One.jpg"); /* Change this to your desired background image */
+            height: 100%;
+            background-position: center;
+            background-attachment: fixed;
+            background-size: cover;
+            filter: brightness(50%);
+        
+    }
+
+    h1 {
+        color: #191342;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2.5rem;
+        font-weight: 600;
+    }
+
+    label {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    select {
+        width: 100%;
+        padding: 15px;
+        margin: 10px 0 20px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        background-color: #ffffff;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    select:focus {
+        border-color: #1a1646;
+        outline: none;
+        box-shadow: 0px 0px 5px rgba(24, 11, 76, 0.5);
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        margin-top: 20px;
+        background-color: #231a51;
+        color: rgb(255, 255, 255);
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    button:active {
+        background-color: #3e8e41;
+        transform: scale(0.98);
+    }
+
+    /* Container styling */
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #899cef;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Responsive design */
+    @media (max-width: 600px) {
+        body {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        select, button {
+            font-size: 1rem;
+        }
+    }
+<style>

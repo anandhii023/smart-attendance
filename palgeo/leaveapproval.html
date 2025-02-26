@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Leave Approval | Student Attendance System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #0000ff; /* Changed to blue */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        select,
+        input[type="text"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+    <!-- Firebase SDKs -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Leave Approval Form</h1>
+
+        <form id="leaveForm">
+            <div class="form-group">
+                <label for="studentName">Student Name</label>
+                <input type="text" id="studentName" name="studentName" placeholder="Enter student name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="leaveReason">Reason for Leave</label>
+                <input type="text" id="leaveReason" name="leaveReason" placeholder="Enter reason for leave" required>
+            </div>
+
+            <div class="form-group">
+                <label for="leaveDate">Leave Date</label>
+                <input type="date" id="leaveDate" name="leaveDate" required>
+            </div>
+
+            <button type="submit" class="btn">Submit Leave Request</button>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+        apiKey: "AIzaSyA_u5NO34ulz7Hf-bcgn112XX54r723x1I",
+        authDomain: "regeo2-f0354.firebaseapp.com",
+        projectId: "regeo2-f0354",
+        storageBucket: "regeo2-f0354.appspot.com",
+        messagingSenderId: "831616928765",
+        appId: "1:831616928765:web:61c33d2403ed0e58626794",
+        measurementId: "G-X22WQ6JXMV"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const leaveForm = document.getElementById('leaveForm');
+
+        leaveForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const studentName = document.getElementById('studentName').value;
+            const leaveReason = document.getElementById('leaveReason').value;
+            const leaveDate = document.getElementById('leaveDate').value;
+
+            try {
+                // Add a new document with a generated ID
+                const docRef = await addDoc(collection(db, "leaveRequests"), {
+                    studentName: studentName,
+                    leaveReason: leaveReason,
+                    leaveDate: leaveDate
+                });
+
+                alert('Leave request submitted for ${studentName} on ${leaveDate} with the reason: ${leaveReason}. Document ID: ${docRef.id}');
+                leaveForm.reset();
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                alert("There was an error submitting your request. Please try again.");
+            }
+        });
+    </script>
+
+</body>
+</html>

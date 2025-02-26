@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Pie Chart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+    <h1>Attendance Pie Chart</h1>
+    <h2>Subject: Data Structure</h2>
+    <h3>Staff Name: Samutha P</h3>
+    <p>Total Hours: 72</p>
+    <p>Absent Hours: 22</p>
+
+    <canvas id="attendanceChart"></canvas>
+
+    <script>
+        // Attendance data
+        const totalHours = 72;
+        const absentHours = 22;
+        const presentHours = totalHours - absentHours;
+
+        // Chart data
+        const data = {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+                label: 'Attendance',
+                data: [presentHours, absentHours],
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.6)', // Color for Present
+                    'rgba(255, 99, 132, 0.6)'  // Color for Absent
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Chart configuration
+        const config = {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                const label = tooltipItem.label || '';
+                                const value = tooltipItem.raw || 0;
+                                const percentage = ((value / totalHours) * 100).toFixed(2);
+                                return `${label}: ${value} hours (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Create the pie chart
+        const attendanceChart = new Chart(
+            document.getElementById('attendanceChart'),
+            config
+        );
+    </script>
+</body>
+</html>
+

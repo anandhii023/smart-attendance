@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Location with Current Position</title>
+    <style>
+        /* Style for the map and result */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .map-container {
+            margin-bottom: 20px;
+        }
+
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Compare Location with Current Position</h1>
+
+    <!-- Google Maps iFrame -->
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1077.0852759405848!2d80.21556310085893!3d12.868688449213188!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525b4761da266d%3A0x92fd0fe363063db0!2sDepartment%20of%20Electronics%20and%20Communication%20Engineering%2C%20SJCE!5e1!3m2!1sen!2sin!4v1729257568346!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <button onclick="compareLocation()">Compare with My Location</button>
+
+    <p id="result"></p>
+
+    <script>
+        // Function to calculate distance between two coordinates using Haversine formula
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            const R = 6371; // Radius of the earth in km
+            const dLat = deg2rad(lat2 - lat1);
+            const dLon = deg2rad(lon2 - lon1);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = R * c; // Distance in km
+            return distance;
+        }
+
+        // Converts degrees to radians
+        function deg2rad(deg) {
+            return deg * (Math.PI / 180);
+        }
+
+        // Function to compare current location with the embedded Google Maps location
+        function compareLocation() {
+            const embeddedLat = 12.8686884; // Latitude of the iframe location
+            const embeddedLon = 80.2155631; // Longitude of the iframe location
+
+            // Check if Geolocation is available
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const userLat = position.coords.latitude;
+                    const userLon = position.coords.longitude;
+
+                    // Calculate the distance between the user location and embedded location
+                    const distance = getDistanceFromLatLonInKm(userLat, userLon, embeddedLat, embeddedLon);
+                    
+                    // Show the result based on the distance
+                    const resultElement = document.getElementById('result');
+                    if (distance < 0.1) { // You can adjust the distance threshold
+                        resultElement.innerText = `You are at or near the embedded location. (Distance: ${distance.toFixed(2)} km)`;
+                        resultElement.style.color = 'green';
+                        
+                        // Mark user as present in localStorage
+                        localStorage.setItem("attendanceStatus", "Present");
+                    } else {
+                        resultElement.innerText = `You are far from the embedded location. (Distance: ${distance.toFixed(2)} km)`;
+                        resultElement.style.color = 'red';
+
+                        // Mark user as absent in localStorage
+                        localStorage.setItem("attendanceStatus", "Absent");
+                    }
+
+                    // Redirect to dashboard.html after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000); // Redirect after 2 seconds for user to see the result
+                }, function(error) {
+                    document.getElementById('result').innerText = "Unable to retrieve your location.";
+                });
+            } else {
+                document.getElementById('result').innerText = "Geolocation is not supported by your browser.";
+            }
+        }
+    </script>
+
+</body>
+</html>

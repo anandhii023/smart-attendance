@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Details with Attendance Table</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="date"] {
+            width: calc(50% - 10px);
+            padding: 10px;
+            margin-right: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input[type="date"]:last-of-type {
+            margin-right: 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-size: 14px;
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        td.icon {
+            text-align: center;
+        }
+
+        td.icon img {
+            width: 20px;
+            height: 20px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Attendance Details</h2>
+        <form action="#" method="POST">
+            <label for="from-date">From Date:</label>
+            <input type="date" id="from-date" name="from-date" required>
+
+            <label for="to-date">To Date:</label>
+            <input type="date" id="to-date" name="to-date" required>
+
+            <label for="student-name">Student Name:</label>
+            <input type="text" id="student-name" name="student-name" placeholder="Enter student's name" required>
+
+            <label for="reg-no">Register Number:</label>
+            <input type="text" id="reg-no" name="reg-no" placeholder="Enter register number" required>
+
+            <button type="submit">Submit</button>
+        </form>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>In</th>
+                        <th>Out</th>
+                        <th>Late</th>
+                        <th>Work</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-10-01</td>
+                        <td>08:45 AM</td>
+                        <td>05:00 PM</td>
+                        <td>No</td>
+                        <td>8 hours</td>
+                        <td class="icon"><img src="https://img.icons8.com/color/48/000000/checked.png" alt="Present"></td>
+                    </tr>
+                    <tr>
+                        <td>2024-10-02</td>
+                        <td>09:15 AM</td>
+                        <td>05:15 PM</td>
+                        <td>Yes</td>
+                        <td>7.5 hours</td>
+                        <td class="icon"><img src="https://img.icons8.com/color/48/000000/minus.png" alt="Late"></td>
+                    </tr>
+                    <tr>
+                        <td>2024-10-03</td>
+                        <td>08:50 AM</td>
+                        <td>04:45 PM</td>
+                        <td>No</td>
+                        <td>7 hours</td>
+                        <td class="icon"><img src="https://img.icons8.com/color/48/000000/error.png" alt="Absent"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <link rel="stylesheet" href="staff.css">
+    <script src="staff.js"></script>
+
+</body>
+</html>

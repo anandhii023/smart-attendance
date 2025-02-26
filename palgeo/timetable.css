@@ -1,0 +1,81 @@
+/* Global styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+    font-size: 2rem;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 15px 20px;
+    text-align: center;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #2980b9;
+    color: white;
+    text-transform: uppercase;
+}
+
+td {
+    background-color: #f9f9f9;
+}
+
+/* Alternate row coloring */
+tbody tr:nth-child(even) {
+    background-color: #f0f8ff;
+}
+
+/* Button styling */
+.status-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    transition: background-color 0.3s;
+    background-color: #e74c3c; /* Red for Absent */
+}
+
+.status-button.present {
+    background-color: #27ae60; /* Green for Present */
+}
+
+/* Button hover effect */
+.status-button:hover {
+    opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    th, td {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+
+    .status-button {
+        font-size: 12px;
+        padding: 8px 16px;
+    }
+}

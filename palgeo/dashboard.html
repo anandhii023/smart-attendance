@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #0000ff; /* Set background color to blue */
+            color: white;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 36px; /* Enlarged font size */
+        }
+
+        .status {
+            font-size: 30px; /* Enlarged font size */
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .present {
+            color: green;
+        }
+
+        .absent {
+            color: red;
+        }
+
+        .btn {
+            font-size: 20px; /* Enlarged button text */
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Attendance Dashboard</h1>
+    <p class="status" id="attendanceStatus">Checking attendance...</p>
+
+    <button class="btn" onclick="goToNextPage()">Next</button> <!-- Next button added -->
+
+    <script>
+        // Retrieve the attendance status from localStorage and display it
+        const attendanceStatus = localStorage.getItem("attendanceStatus");
+
+        const statusElement = document.getElementById('attendanceStatus');
+
+        if (attendanceStatus === "Present") {
+            statusElement.innerText = "You are marked as Present";
+            statusElement.classList.add('present');
+        } else if (attendanceStatus === "Absent") {
+            statusElement.innerText = "You are marked as Absent";
+            statusElement.classList.add('absent');
+        } else {
+            statusElement.innerText = "Attendance not recorded.";
+            statusElement.style.color = '#fff';
+        }
+
+        // Function to handle Next button click
+        function goToNextPage() {
+            window.location.href = 'markin.html'; // Redirects to markin.html
+        }
+    </script>
+
+</body>
+</html>

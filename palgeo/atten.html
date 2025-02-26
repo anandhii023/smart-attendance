@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Attendance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1 class="text-center my-4">Admin Dashboard - Attendance</h1>
+        <!-- Your Content Goes Here -->
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-HoAAgKkkxW2XeA2Lz0bwk6KoaAG2sxFO+u6jkq4tFIFjHgJHgCtOBBdCuD7kwtL4"
+        crossorigin="anonymous" 
+        defer
+    ></script>
+
+    <!-- Custom JS (If needed) -->
+    <script src="script.js" defer></script>
+
+</body>
+</html>
+</head>
+<body class="bg-light">
+    <div class="container mt-5 p-4 bg-white shadow rounded">
+        <h2 class="text-center mb-4">Admin Attendance Dashboard</h2>
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <input type="text" id="searchUser" class="form-control" placeholder="Search by User" onkeyup="filterRecords()">
+            </div>
+            <div class="col-md-3">
+                <select id="filterStatus" class="form-select" onchange="filterRecords()">
+                    <option value="">All</option>
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                </select>
+            </div>
+            <div class="col-md-5 text-end">
+                <button class="btn btn-success me-2" onclick="downloadCSV()">Download CSV</button>
+                <button class="btn btn-primary" onclick="downloadExcel()">Download Excel</button>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center">
+                <thead class="table-primary">
+                    <tr>
+                        <th>User</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="attendanceTable">
+                    <tr><td colspan="3">No records found</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let attendanceData = [
+    { "user": "AARALYN.G", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AATHITHYA ARASU S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Abdul kamil.k", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ABINAYA S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ABISHEK.S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AGALYA.A.S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AISHWARYA. R", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Aishwaryaa R", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AJAYKUMAR K", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Akash M S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AKILESHWARAN.N", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AKSHAY S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "AKSHAYA. M", "status": "Absent", "timestamp": "-" },
+    { "user": "AKSHITHA U.A", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Allen Paul Jebasingh A", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ANANDA KRISHNAN S.A", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ANANDHALAKSHMI E", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ANGELA SHYLYN P", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Ann Rhayan M.S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ANTO JEROME A", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Anu Isvarya A", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ARUNPRASAD M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ASHARUDEEN S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ASHWINI R", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ASWINTH S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "ATCHAYA M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Ayushmathi.G", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "BAAVANA M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Bala Muruganantham .K", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "BALANITHI G", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "BALASUBRAMANIAN V", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "BAVATHARANI.V", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Benita Mary", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "BHAVANA V", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Bhavyaa. V", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Bhuvaneshwar M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Blessy M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "BRYAN NOBEL.A", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "CHANDRU K", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "CHANDRU.S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Charunila S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "D. Dhanusha", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DANUPRIYA V", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Danvin V", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dashetha.N", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DEEPIKA SHWETHA S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DEVA SAHAYA SHARAIL C", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Devipriya M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DHAMINI B", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dhanush R Nair", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dhanush VN", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DHARSHINI. S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DHARSHINI.P", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dhavasi.M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dheena Dhayalan.M", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "DHINESH R", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dinesh.K", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Dinesh.S", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Divya.R", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Easwarnaath sm", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Esly Abro K", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Suchir. S. M", "status": "Absent", "timestamp": "-" },
+    { "user": "Neithal Pillai", "status": "Present", "timestamp": "2025-01-30 09:00 AM" },
+    { "user": "Ajay C", "status": "Present", "timestamp": "2025-01-30 09:00 AM" }
+];
+
+        function loadAttendance() {
+            let tableBody = document.getElementById("attendanceTable");
+            tableBody.innerHTML = "";
+            attendanceData.forEach(record => {
+                let row = `<tr>
+                    <td>${record.user}</td>
+                    <td>${record.status}</td>
+                    <td>${record.timestamp}</td>
+                </tr>`;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        function filterRecords() {
+            let searchUser = document.getElementById("searchUser").value.toLowerCase();
+            let filterStatus = document.getElementById("filterStatus").value;
+            let filteredData = attendanceData.filter(record =>
+                record.user.toLowerCase().includes(searchUser) &&
+                (filterStatus === "" || record.status === filterStatus)
+            );
+            let tableBody = document.getElementById("attendanceTable");
+            tableBody.innerHTML = "";
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='3'>No records found</td></tr>";
+            } else {
+                filteredData.forEach(record => {
+                    let row = `<tr>
+                        <td>${record.user}</td>
+                        <td>${record.status}</td>
+                        <td>${record.timestamp}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+            }
+        }
+
+        function downloadCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,User,Status,Time\n";
+            attendanceData.forEach(record => {
+                csvContent += ${record.user},${record.status},${record.timestamp}\n;
+            });
+            let encodedUri = encodeURI(csvContent);
+            let link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "attendance.csv");
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        function downloadExcel() {
+            let table = document.getElementById("attendanceTable");
+            let html = <html><head><meta charset='UTF-8'></head><body>${table.outerHTML}</body></html>;
+            let blob = new Blob([html], { type: "application/vnd.ms-excel" });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "attendance.xls";
+            document.body.appendChild(link);
+            link.click();
+        }
+
+        loadAttendance();
+    </script>
+</body>
+</html>

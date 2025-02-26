@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timetable - St. Joseph's College</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        td {
+            background-color: #f9f9f9;
+        }
+
+        .status-button {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .status-button.present {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Timetable - St. Joseph's College</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Time</th>
+                <th>Venue</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Period 1</td>
+                <td>7:50 - 8:40</td>
+                <td>IT -A</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 2</td>
+                <td>8:40 - 9:30</td>
+                <td>IT A</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 3</td>
+                <td>9:40 - 10:20</td>
+                <td>IT A</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 4</td>
+                <td>10:20 - 11:00</td>
+                <td>IT A</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 5</td>
+                <td>11:00 - 11:40</td>
+                <td>IT A</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 6</td>
+                <td>11:40 - 12:20</td>
+                <td>IT A</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 7</td>
+                <td>1:00 - 1:40</td>
+                <td>IT Lab</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 8</td>
+                <td>1:40 - 2:20</td>
+                <td>IT Lab</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 9</td>
+                <td>2:20 - 3:00</td>
+                <td>IT Lab</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+            <tr>
+                <td>Period 10</td>
+                <td>3:30 - 5:00</td>
+                <td>IT Lab</td>
+                <td><button class="status-button" onclick="toggleStatus(this)">Absent</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Function to toggle between Present and Absent
+        function toggleStatus(button) {
+            if (button.classList.contains('present')) {
+                button.textContent = "Absent";
+                button.classList.remove('present');
+                button.style.backgroundColor = '#e74c3c'; // red for Absent
+            } else {
+                button.textContent = "Present";
+                button.classList.add('present');
+                button.style.backgroundColor = '#27ae60'; // green for Present
+            }
+        }
+    </script>
+<link rel="stylesheet" href="timetable.css">
+
+</body>
+</html>

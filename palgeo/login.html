@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGEO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="email"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>REGEO</h2>
+        <h6 style="text-align:center;">St. Joseph's College of Engineering</h6>
+        <form id="loginForm">
+            <input type="text" id="name" name="name" placeholder="Full Name" required>
+            <input type="text" id="number" name="number" placeholder="Roll Number" required>
+            <input type="text" id="dept" name="dept" placeholder="Dept&sec" required>
+            <input type="text" id="email" name="email" placeholder="Email ID" required>
+            <input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+           <button type="submit">Register</button></a>
+        </form>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js"></script>
+
+    <script type="module">
+        // Import Firebase functions for initializing app and Firestore
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-analytics.js";
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyAjpeefqXdyhxndF5P7YYoEi_F7_IEimpk",
+          authDomain: "regeo-1bd11.firebaseapp.com",
+          databaseURL: "https://regeo-1bd11-default-rtdb.firebaseio.com",
+          projectId: "regeo-1bd11",
+          storageBucket: "regeo-1bd11.appspot.com",
+          messagingSenderId: "446662326904",
+          appId: "1:446662326904:web:e7aad0b498fa483aefcb8d",
+          measurementId: "G-Z80JEKTDW2"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+      
+        // Function to handle form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+          e.preventDefault();  // Prevent form from submitting in the traditional way
+          
+          // Get form data
+          const name = document.getElementById('name').value;
+          const email = document.getElementById('email').value;
+          const phone = document.getElementById('phone').value;
+          const dept = document.getElementById('dept').value;
+          const number = document.getElementById('number').value;
+      
+          try {
+            // Add form data to Firestore in a collection called "staff-details"
+            await addDoc(collection(db, 'staff-details'), {
+              name: name,
+              email: email,
+              phone: phone
+            });
+            
+            alert('Data has been saved to Firestore successfully!');
+            
+            // Clear the form after submission
+            document.getElementById('loginForm').reset(); 
+
+            // Redirect to markin.html
+            window.location.href = 'markin.html';  // Redirects to markin.html after form submission
+
+          } catch (error) {
+            console.error('Error adding document: ', error);
+            alert('Error saving data: ' + error);
+          }
+        });
+      </script>
+</body>
+</html>

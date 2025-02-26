@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart - Professional English</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+            text-align: center;
+        }
+        canvas {
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Attendance Chart for Professional English</h1>
+    <p><strong>Staff Name:</strong> Anudhan A</p>
+
+    <canvas id="attendanceChart"></canvas>
+
+    <script>
+        // Total and Absent hours
+        const totalHours = 72;
+        const absentHours = 22;
+        const attendedHours = totalHours - absentHours;
+
+        // Data for the pie chart
+        const data = {
+            labels: ['Attended Hours', 'Absent Hours'],
+            datasets: [{
+                label: 'Attendance',
+                data: [attendedHours, absentHours],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)', // Color for attended hours (Blue)
+                    'rgba(255, 99, 132, 0.6)'   // Color for absent hours (Red)
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        // Config for the pie chart
+        const config = {
+            type: 'pie',
+            data: data,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Attendance Distribution'
+                    }
+                }
+            },
+        };
+
+        // Render the pie chart
+        const attendanceChart = new Chart(
+            document.getElementById('attendanceChart'),
+            config
+        );
+    </script>
+</body>
+</html>
+

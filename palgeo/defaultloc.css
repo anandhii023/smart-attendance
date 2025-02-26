@@ -1,0 +1,55 @@
+/* Style for the body and text */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+/* Container for the embedded map */
+.map-container {
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    padding: 10px;
+    background-color: white;
+}
+
+/* Button styling */
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: #45a049;
+}
+
+/* Result text styling */
+#result {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Success message styling */
+#result.green {
+    color: green;
+}
+
+/* Error message styling */
+#result.red {
+    color: red;
+}

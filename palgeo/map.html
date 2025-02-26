@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location and Attendance</title>
+    <!-- CSS Styles -->
+    <style>
+        
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #444;
+    }
+
+    section {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 80%;
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+    }
+
+    label {
+        font-size: 1.1em;
+        color: #444;
+    }
+
+    input[type="number"] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0 20px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1em;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    hr {
+        border: 0;
+        height: 1px;
+        background: #ddd;
+        margin: 20px 0;
+    }
+
+    p#attendanceResult {
+        font-size: 1.2em;
+        font-weight: bold;
+        color: #ff0000;
+        text-align: center;
+    }
+
+    p#attendanceResult.success {
+        color: #28a745;
+    }
+
+    p#attendanceResult.failed {
+        color: #dc3545;
+    }
+</style>
+
+    </style>
+</head>
+<body>
+
+<h2>Location and Attendance System</h2>
+
+<!-- Default Location Section (from defaultloc.html) -->
+<section>
+    <h3>Your Default Location</h3>
+    <form id="defaultLocationForm">
+        <label for="defaultLat">Default Latitude:</label>
+        <input type="number" id="defaultLat" step="any" readonly><br><br>
+
+        <label for="defaultLon">Default Longitude:</label>
+        <input type="number" id="defaultLon" step="any" readonly><br><br>
+
+        <button type="button" onclick="setDefaultLocation()">Set My Current Location as Default</button>
+    </form>
+</section>
+
+<hr>
+
+<!-- Attendance Section (from attendance.html) -->
+<section>
+    <h3>Attendance Based on Location</h3>
+    <form id="attendanceForm">
+        <label for="currentLat">Current Latitude:</label>
+        <input type="number" id="currentLat" step="any" readonly><br><br>
+
+        <label for="currentLon">Current Longitude:</label>
+        <input type="number" id="currentLon" step="any" readonly><br><br>
+
+        <button type="button" onclick="checkAttendance()">Check Attendance</button>
+    </form>
+
+    <p id="attendanceResult"></p>
+</section>
+
+<!-- JavaScript Logic -->
+<script>
+    // Function to get current location using Geolocation API
+    function getCurrentLocation(callback) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                const lat = position.coords.latitude;
+                const lon = position.coords.longitude;
+                callback(lat, lon);
+            }, function(error) {
+                alert("Error in getting location: " + error.message);
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    // Function to set default location
+    function setDefaultLocation() {
+        getCurrentLocation(function(lat, lon) {
+            document.getElementById('defaultLat').value = lat;
+            document.getElementById('defaultLon').value = lon;
+            alert("Default location set successfully!");
+        });
+    }
+
+    // Function to check attendance based on current location
+    function checkAttendance() {
+        getCurrentLocation(function(currentLat, currentLon) {
+            // Set current location
+            document.getElementById('currentLat').value = currentLat;
+            document.getElementById('currentLon').value = currentLon;
+
+            // Get default location from form
+            const defaultLat = parseFloat(document.getElementById('defaultLat').value);
+            const defaultLon = parseFloat(document.getElementById('defaultLon').value);
+
+            // Check if current location matches default location
+            const resultElement = document.getElementById('attendanceResult');
+
+            if (defaultLat === currentLat && defaultLon === currentLon) {
+                resultElement.innerText = "Attendance recorded successfully. You are at the correct location.";
+                resultElement.classList.add('success');
+                resultElement.classList.remove('failed');
+            } else {
+                resultElement.innerText = "You are not at the default location. Attendance failed.";
+                resultElement.classList.add('failed');
+                resultElement.classList.remove('success');
+            }
+        });
+    }
+
+    // Automatically set current location for default and current location fields on page load
+    window.onload = function() {
+        getCurrentLocation(function(lat, lon) {
+            document.getElementById('defaultLat').value = lat;
+            document.getElementById('defaultLon').value = lon;
+            document.getElementById('currentLat').value = lat;
+            document.getElementById('currentLon').value = lon;
+        });
+    }
+</script>
+
+</body>
+</html>

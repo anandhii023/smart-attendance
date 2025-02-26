@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Camera with Motion Detection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        video {
+            width: 100%;
+            max-width: 600px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 10px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Camera Feed</h1>
+    <video id="video" autoplay></video>
+    <button id="startCamera">Allow Camera</button>
+    <button id="stopCamera" disabled>Stop Camera</button>
+    <canvas id="canvas" style="display: none;"></canvas>
+    
+    <div id="status">You are not in the live location.</div>
+    
+    <script>
+        const video = document.getElementById('video');
+        const startCameraButton = document.getElementById('startCamera');
+        const stopCameraButton = document.getElementById('stopCamera');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const statusText = document.getElementById('status');
+
+        let streamActive = false;
+        let mediaStream = null;
+
+        async function startCamera() {
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = mediaStream;
+                streamActive = true;
+                detectMotion();
+                startCameraButton.disabled = true;
+                stopCameraButton.disabled = false;
+            } catch (err) {
+                console.error("Error accessing the camera: ", err);
+                alert("Camera permission denied. Please enable the camera.");
+                streamActive = false;
+            }
+        }
+
+        function stopCamera() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                video.srcObject = null;
+                streamActive = false;
+                startCameraButton.disabled = false;
+                stopCameraButton.disabled = true;
+                statusText.textContent = "You are not in the live location.";
+            }
+        }
+
+        function detectMotion() {
+            const motionThreshold = 50; // Threshold for motion detection
+            const previousFrame = context.createImageData(640, 480);
+
+            function checkForMotion() {
+                if (!streamActive) return;
+
+                context.drawImage(video, 0, 0, 640, 480);
+                const currentFrame = context.getImageData(0, 0, 640, 480);
+                let motionDetected = false;
+
+                for (let i = 0; i < currentFrame.data.length; i += 4) {
+                    const rDiff = Math.abs(currentFrame.data[i] - previousFrame.data[i]);
+                    const gDiff = Math.abs(currentFrame.data[i + 1] - previousFrame.data[i + 1]);
+                    const bDiff = Math.abs(currentFrame.data[i + 2] - previousFrame.data[i + 2]);
+
+                    if (rDiff + gDiff + bDiff > motionThreshold) {
+                        motionDetected = true;
+                        break;
+                    }
+                }
+
+                if (motionDetected) {
+                    // Automatically capture the image and check location
+                    captureImage();
+                }
+
+                previousFrame.data.set(currentFrame.data);
+                requestAnimationFrame(checkForMotion);
+            }
+
+            requestAnimationFrame(checkForMotion);
+        }
+
+        function captureImage() {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0);
+            const imageDataUrl = canvas.toDataURL('image/png');
+
+            // Get user's location
+            navigator.geolocation.getCurrentPosition(position => {
+                const { latitude, longitude } = position.coords;
+                checkLocationAndRedirect(imageDataUrl, latitude, longitude);
+            }, () => {
+                alert("Unable to retrieve location. Please allow location access.");
+            });
+        }
+
+        function checkLocationAndRedirect(imageDataUrl, latitude, longitude) {
+            // Example coordinates for St. Joseph's College of Engineering
+            const sjceCoordinates = { lat: 12.8307, lon: 80.2248 };
+            const distanceThreshold = 0.01; // Approximate distance in degrees (for simplicity)
+
+            const isInCampus = Math.abs(latitude - sjceCoordinates.lat) < distanceThreshold &&
+                               Math.abs(longitude - sjceCoordinates.lon) < distanceThreshold;
+
+            const locationStatus = isInCampus ? "You are present in the campus." : "You are absent.";
+            const locationPage = 'location.html?img=${encodeURIComponent(imageDataUrl)}&status=${encodeURIComponent(locationStatus)}';
+            window.location.href = locationPage;
+        }
+
+        startCameraButton.addEventListener('click', startCamera);
+        stopCameraButton.addEventListener('click', stopCamera);
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2); /* Gradient background */
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+
+        .container {
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff; /* White background for the container */
+            border-radius: 15px; /* Increased border radius for a softer look */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* Deeper shadow */
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container:hover {
+            transform: translateY(-5px); /* Slight upward movement on hover */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
+        }
+
+        h1 {
+            color: #388e3c; /* Darker green for the heading */
+            font-size: 2.8rem; /* Slightly larger font size */
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Text shadow for depth */
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555; /* Softer dark gray for the paragraph */
+        }
+
+        .stars {
+            margin: 20px 0;
+        }
+
+        .stars span {
+            font-size: 6rem;
+            color: #ffd600; /* Gold color for stars */
+            transition: transform 0.3s;
+        }
+
+        .stars span:hover {
+            transform: scale(1.1); /* Scale stars on hover */
+        }
+
+        .badge-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(90deg, #4caf50, #66bb6a); /* Gradient for the badge */
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .badge-container:hover {
+            transform: scale(1.05); /* Scale effect on hover */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+        }
+
+        .badge-icon {
+            font-size: 3rem;
+            margin-right: 10px;
+            color: #fff;
+        }
+
+        .badge-text {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold; /* Bold text for emphasis */
+        }
+
+        .feedback-btn {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, #2196f3, #64b5f6); /* Gradient for the button */
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-btn:hover {
+            background: linear-gradient(45deg, #1976d2, #42a5f5); /* Darker gradient on hover */
+            transform: translateY(-3px); /* Slight upward movement on hover */
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #666; /* Gray for footer text */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Congratulations!</h1>
+        <p>You have achieved perfect attendance!</p>
+        
+        <!-- Stars Section -->
+        <div class="stars">
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+            <span>&#9733;</span>
+        </div>
+        
+        <!-- Badge Section -->
+        <div class="badge-container">
+            <span class="badge-icon">&#10024;</span> <!-- Star icon -->
+            <span class="badge-text">Perfect Attendance</span>
+        </div>
+        
+        <!-- Feedback Button -->
+        <a href="feedback.html" class="feedback-btn">Leave Feedback</a> <!-- Updated link here -->
+    </div>
+
+    <footer>
+        &copy; 2024 Attendance App. All Rights Reserved.
+    </footer>
+    
+</body>
+</html>
